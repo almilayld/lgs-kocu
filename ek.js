@@ -114,6 +114,8 @@ const css = `
 .ek-light.open{display:flex} .ek-light img{max-width:100%;max-height:100%;border-radius:12px}
 .ek-tip{padding:12px 14px;border-radius:16px;background:#fff6dd;border:1px solid #f2d18b;font-weight:700;font-size:14px;margin-top:8px}
 .ek-svg svg{width:100%;height:280px;display:block}
+.ek-ans{display:flex;gap:8px}.ek-ans button{flex:1;border:2px solid var(--stroke);background:var(--paper2);border-radius:14px;padding:9px 0;font:700 17px Fredoka,sans-serif}.ek-ans button.on{border-color:#6fa35a;background:#dff2d0}
+.ek-mini{display:inline-flex;gap:3px}.ek-mini button{border:1px solid var(--stroke);background:#fff;border-radius:8px;padding:1px 7px;font-weight:800;font-size:12px}
 @media (max-width:900px){.ek-why{grid-template-columns:repeat(2,1fr)}}
 `;
 document.head.insertAdjacentHTML('beforeend', '<style>' + css + '</style>');
@@ -136,6 +138,8 @@ wrap.insertAdjacentHTML('beforeend', `
       <div class="row" style="margin-top:10px"><select id="ekSubj" style="flex:1">${opts(SUBJ.map(s => [s.k, s.e + ' ' + s.n]), 'mat')}</select><select id="ekTopic" style="flex:1.4"></select></div>
       <h3 style="margin-top:12px">Neden yanlış yaptın?</h3>
       <div class="ek-why" id="ekWhy">${Object.entries(WHY).map(([k, w]) => `<button data-w="${k}" class="${k === 'bilgi' ? 'on' : ''}"><b>${w.e}</b>${w.n}</button>`).join('')}</div>
+      <h3 style="margin-top:12px">Doğru cevap neydi?</h3>
+      <div class="ek-ans" id="ekAns">${['A','B','C','D'].map(x => `<button data-a="${x}">${x}</button>`).join('')}</div>
       <textarea id="ekNote" rows="2" style="width:100%;margin-top:10px;resize:vertical" placeholder="Kısa not (ör. işaret hatası yaptım, formülü unuttum)"></textarea>
       <button class="btn green" id="ekSave" style="width:100%;margin-top:10px;font-size:17px">💾 Havuza ekle</button>
     </div>
@@ -144,6 +148,7 @@ wrap.insertAdjacentHTML('beforeend', `
       <div class="ek-chips" id="ekFilt"></div>
       <label style="font-weight:800;font-size:13px;display:flex;gap:6px;align-items:center"><input type="checkbox" id="ekOpen"> Sadece tekrar çözmediklerim</label>
       <div class="muted" style="font-weight:700;font-size:13px;margin-top:6px" id="ekCount"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="ekQuiz" style="flex:1">📝 Deneme oluştur</button><button class="btn pink" id="ekCards" style="flex:1">🃏 Flashcard</button></div>
     </div>
   </div>
   <div class="ek-grid" id="ekGrid"></div>
@@ -165,10 +170,12 @@ document.body.insertAdjacentHTML('beforeend', '<div class="ek-light" id="ekLight
 $('ekLight').onclick = () => $('ekLight').classList.remove('open');
 
 // ── form ──
-let ekImg = null, ekWhy = 'bilgi', ekF = 'all', anOn = new Set(SUBJ.map(s => s.k)), anTopF = 'all';
+let ekA = '', ekImg = null, ekWhy = 'bilgi', ekF = 'all', anOn = new Set(SUBJ.map(s => s.k)), anTopF = 'all';
 const fillT = () => { $('ekTopic').innerHTML = '<option value="">Konu seç (bilmiyorsan boş bırak)</option>' + topicsOf($('ekSubj').value).map(t => `<option>${esc(t)}</option>`).join(''); };
 fillT(); $('ekSubj').onchange = fillT;
 $('ekWhy').querySelectorAll('button').forEach(b => b.onclick = () => { $('ekWhy').querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); ekWhy = b.dataset.w; });
+$('ekAns').querySelectorAll('button').forEach(b => b.onclick = () => { const on = !b.classList.contains('on'); $('ekAns').querySelectorAll('button').forEach(x => x.classList.remove('on')); if (on) b.classList.add('on'); ekA = on ? b.dataset.a : ''; });
+$('ekQuiz').onclick = () => window.LGSQUIZ && LGSQUIZ.open('deneme'); $('ekCards').onclick = () => window.LGSQUIZ && LGSQUIZ.open('kart');
 $('ekFile').onchange = async e => {
   const f = e.target.files[0]; if (!f) return;
   try{ ekImg = await shrink(f); $('ekDropTxt').innerHTML = `<img src="${ekImg}" alt=""><small>Değiştirmek için dokun</small>`; }
@@ -176,10 +183,10 @@ $('ekFile').onchange = async e => {
 };
 $('ekSave').onclick = async () => {
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-  const it = {id, s:$('ekSubj').value, t:$('ekTopic').value, w:ekWhy, note:$('ekNote').value.trim(), d:today(), img:!!ekImg, solved:false, u:Date.now()};
+  const it = {id, s:$('ekSubj').value, t:$('ekTopic').value, w:ekWhy, note:$('ekNote').value.trim(), d:today(), img:!!ekImg, a:ekA, solved:false, u:Date.now()};
   if (ekImg) await idb.set(id, ekImg).catch(() => toast('⚠ Fotoğraf bu cihaza kaydedilemedi'));
   E.items.unshift(it); save();
-  ekImg = null; $('ekFile').value = ''; $('ekNote').value = ''; $('ekDropTxt').innerHTML = '📷 Fotoğraf çek ya da seç<br><small style="font-weight:600">(isteğe bağlı)</small>';
+  ekImg = null; ekA = ''; $('ekAns').querySelectorAll('button').forEach(x => x.classList.remove('on')); $('ekFile').value = ''; $('ekNote').value = ''; $('ekDropTxt').innerHTML = '📷 Fotoğraf çek ya da seç<br><small style="font-weight:600">(isteğe bağlı)</small>';
   toast('📸 Havuza eklendi'); say(ekWhy === 'dikkat' ? 'Dikkatsizlik mi? Soruyu yavaş oku, şıkları kontrol et 👀' : 'Yanlışını yazmak, onu bir daha yapmamanın ilk adımı 💪');
   refresh();
 };
@@ -198,12 +205,14 @@ function renderPool(){
       <div class="ek-body"><span>${s.e} ${esc(s.n)}</span><span style="font-weight:800">${esc(i.t || 'Konu belirtilmedi')}</span>
         <span><span class="ek-tag" style="background:${w.c}">${w.e} ${w.n}</span></span>
         ${i.note ? `<span class="muted" style="font-weight:600">${esc(i.note)}</span>` : ''}
+        <span>Cevap: ${i.a ? `<b>${i.a}</b>` : `<span class="ek-mini">${['A','B','C','D'].map(x => `<button data-set="${x}">${x}</button>`).join('')}</span>`}</span>
         <span class="muted" style="font-size:12px">${i.d.split('-').reverse().join('.')}</span></div>
       <div class="ek-act"><button data-a="solve">${i.solved ? '↺ Geri al' : '✅ Çözdüm'}</button><button data-a="ask" title="ChatGPT'ye sor">🆘</button><button data-a="del" title="Sil">🗑</button></div></div>`; }).join('')
     : '<div class="card paper muted" style="font-weight:700">Burası henüz boş. Denemede yanlış yaptığın soruların fotoğrafını ekle, burada ders ders birikir 📚</div>';
   $('ekGrid').querySelectorAll('.ek-card').forEach(card => {
     const it = E.items.find(i => i.id === card.dataset.id), ph = card.querySelector('.ek-ph');
     if (it.img) imgFor(it).then(d => { if (d){ ph.innerHTML = `<img src="${d}" alt="">`; ph.onclick = () => { $('ekLight').querySelector('img').src = d; $('ekLight').classList.add('open'); }; } else ph.textContent = '🖼️'; });
+    card.querySelectorAll('[data-set]').forEach(b => b.onclick = () => { it.a = b.dataset.set; it.u = Date.now(); save(); renderPool(); });
     card.querySelectorAll('[data-a]').forEach(b => b.onclick = async () => {
       if (b.dataset.a === 'solve'){ it.solved = !it.solved; it.u = Date.now(); save(); if (it.solved) say('Bir yanlış daha tarihe karıştı! 🎉'); renderPool(); }
       if (b.dataset.a === 'del' && confirm('Bu soru havuzdan silinsin mi?')){
@@ -268,6 +277,7 @@ function renderAnalysis(){
     + `<div class="muted" style="font-size:12.5px;font-weight:700;margin-top:6px">${Object.values(WHY).map(w => `<span style="color:${w.c}">■</span> ${w.n}`).join(' · ')}</div>`
     : '<p class="muted" style="font-weight:700">Henüz kayıt yok.</p>';
 }
+window.LGSPOOL = { items: () => E.items, img: imgFor, subj: sj, why: WHY, setAnswer(id, a){ const it = E.items.find(x => x.id === id); if (it){ it.a = a; it.u = Date.now(); save(); refresh(); } } };
 function refresh(){ const p = document.querySelector('.page.on')?.id; if (p === 'p-havuz') renderPool(); if (p === 'p-analiz') renderAnalysis(); }
 pull();
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') pull(); });
