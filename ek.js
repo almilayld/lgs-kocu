@@ -114,7 +114,7 @@ const css = `
 .ek-light.open{display:flex} .ek-light img{max-width:100%;max-height:100%;border-radius:12px}
 .ek-tip{padding:12px 14px;border-radius:16px;background:#fff6dd;border:1px solid #f2d18b;font-weight:700;font-size:14px;margin-top:8px}
 .ek-svg svg{width:100%;height:280px;display:block}
-.ek-ans{display:flex;gap:8px}.ek-ans button{flex:1;border:2px solid var(--stroke);background:var(--paper2);border-radius:14px;padding:9px 0;font:700 17px Fredoka,sans-serif}.ek-ans button.on{border-color:#6fa35a;background:#dff2d0}
+.ek-ans{display:flex;gap:8px}.ek-ans button{flex:1;border:2px solid var(--stroke);background:var(--paper2);border-radius:14px;padding:9px 0;font:700 17px 'Baloo 2',sans-serif}.ek-ans button.on{border-color:#6fa35a;background:#dff2d0}
 .ek-mini{display:inline-flex;gap:3px}.ek-mini button{border:1px solid var(--stroke);background:#fff;border-radius:8px;padding:1px 7px;font-weight:800;font-size:12px}
 @media (max-width:900px){.ek-why{grid-template-columns:repeat(2,1fr)}}
 `;
