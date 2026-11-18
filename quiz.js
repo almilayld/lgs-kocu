@@ -22,19 +22,19 @@ const css = `
 .qz-q{border:1px solid var(--stroke);background:#fff;border-radius:18px;padding:12px;margin:12px 0}
 .qz-q img{max-width:100%;max-height:420px;display:block;margin:8px auto;border-radius:10px}
 .qz-bub{display:flex;gap:10px;margin-top:8px}
-.qz-bub button{width:44px;height:44px;border-radius:50%;border:2px solid #b9a98a;background:#fff;font:700 17px Fredoka,sans-serif;cursor:pointer}
+.qz-bub button{width:44px;height:44px;border-radius:50%;border:2px solid #b9a98a;background:#fff;font:700 17px 'Baloo 2',sans-serif;cursor:pointer}
 .qz-bub button.on{background:#3a2a10;color:#fff;border-color:#3a2a10}
 .qz-bub button.ok{background:#6fa35a;color:#fff;border-color:#6fa35a}.qz-bub button.no{background:#e2604f;color:#fff;border-color:#e2604f}
 .qz-res{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;margin:10px 0}
-.qz-res div{background:#fff;border-radius:16px;padding:10px;border:1px solid var(--stroke)}.qz-res b{display:block;font:700 30px Fredoka,sans-serif}
-.qz-timer{font:700 18px Fredoka,sans-serif;padding:6px 12px;border-radius:999px;background:#fff1d4}
+.qz-res div{background:#fff;border-radius:16px;padding:10px;border:1px solid var(--stroke)}.qz-res b{display:block;font:700 30px 'Baloo 2',sans-serif}
+.qz-timer{font:700 18px 'Baloo 2',sans-serif;padding:6px 12px;border-radius:999px;background:#fff1d4}
 .fc-wrap{perspective:1200px;margin:10px auto;max-width:620px}
 .fc{position:relative;height:440px;transition:transform .6s;transform-style:preserve-3d;cursor:pointer}
 .fc.flip{transform:rotateY(180deg)}
 .fc>div{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;background:#fff;border:1px solid var(--stroke);box-shadow:0 10px 26px rgba(60,70,40,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;text-align:center}
 .fc .back{transform:rotateY(180deg);background:linear-gradient(135deg,#fff8e6,#eef7e6)}
 .fc img{max-width:100%;max-height:340px;border-radius:10px}
-.fc .big{font:700 64px Fredoka,sans-serif;color:#4c7d3a}
+.fc .big{font:700 64px 'Baloo 2',sans-serif;color:#4c7d3a}
 .qz-note{color:var(--muted);font-weight:700;font-size:13px}
 @media (max-width:600px){.qz-res{grid-template-columns:repeat(2,1fr)}.fc{height:380px}}
 `;
