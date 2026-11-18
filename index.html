@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>🐇 Yıldırım LGS Koçu</title>
+<title>🐇 Baniko Koçluk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -202,7 +202,7 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
 
 <div class="wrap">
   <nav class="top paper">
-    <div class="logo"><img class="bun" data-art="spotty" src="data:," alt="">Yıldırım LGS</div>
+    <div class="logo"><img class="bun" data-art="spotty" src="data:," alt="">Baniko Koçluk</div>
     <button class="tab on" data-p="home">🏠 Ana Sayfa</button>
     <button class="tab" data-p="exams">📊 Denemeler</button>
     <button class="tab" data-p="topics">📚 Konular</button>
@@ -353,7 +353,7 @@ document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded'
 
 <div class="modal" id="welcome"><div class="paper" style="text-align:center">
   <img class="bun" data-art="loveear" src="data:," alt="" style="height:120px;margin:0 auto;animation:hop 2.4s infinite">
-  <h2>Yıldırım LGS Koçu'na hoş geldin! 🌸</h2>
+  <h2>Baniko Koçluk'a hoş geldin! 🌸</h2>
   <p style="font-weight:700" class="muted">Ben senin çalışma arkadaşınım. Sana nasıl seslenelim?</p>
   <div class="grid" style="gap:10px;justify-items:center">
     <input type="text" id="welcomeName" placeholder="Adın" style="width:260px">
@@ -626,7 +626,7 @@ function pDraw(){
   const m = Math.floor(pLeft/60), s = pLeft % 60;
   $('pomoTime').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
   $('ringArc').style.strokeDashoffset = C * (1 - pLeft / (pMin*60));
-  document.title = pTimer ? `${$('pomoTime').textContent} · Odak 🐇` : '🐇 Yıldırım LGS Koçu';
+  document.title = pTimer ? `${$('pomoTime').textContent} · Odak 🐇` : '🐇 Baniko Koçluk';
 }
 $('pomoModes').querySelectorAll('button').forEach(b => b.onclick = () => {
   if (pTimer) return toast('Önce seansı durdur ⏸');
