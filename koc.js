@@ -226,7 +226,7 @@ const R = {
 
 // ───────── Arayüz ─────────
 const css = `
-.bk-fab{position:fixed;right:16px;bottom:118px;z-index:30;border:0;border-radius:999px;padding:8px 16px 8px 8px;display:flex;align-items:center;gap:8px;font:700 15px Fredoka,Nunito,sans-serif;color:#3a2a10;background:linear-gradient(135deg,#ffe7b0,#ffc98a);box-shadow:0 8px 22px rgba(120,80,30,.3);cursor:pointer;transition:.25s}
+.bk-fab{position:fixed;right:16px;bottom:118px;z-index:30;border:0;border-radius:999px;padding:8px 16px 8px 8px;display:flex;align-items:center;gap:8px;font:700 15px 'Baloo 2',Nunito,sans-serif;color:#3a2a10;background:linear-gradient(135deg,#ffe7b0,#ffc98a);box-shadow:0 8px 22px rgba(120,80,30,.3);cursor:pointer;transition:.25s}
 .bk-fab:hover{transform:translateY(-3px) scale(1.04)}
 .bk-fab svg{width:46px;height:46px}
 .bk-owl{overflow:visible;animation:bkFloat 3.2s ease-in-out infinite}
@@ -242,7 +242,7 @@ const css = `
 .bk-panel.open{transform:none;opacity:1;pointer-events:auto}
 .bk-head{display:flex;align-items:center;gap:10px;padding:10px 14px;background:linear-gradient(135deg,#f6e3c4,#efd2a8);border-bottom:1px solid var(--stroke)}
 .bk-head svg{width:62px;height:62px}
-.bk-head b{font:700 21px Fredoka,sans-serif;display:block}
+.bk-head b{font:700 21px 'Baloo 2',sans-serif;display:block}
 .bk-head small{font-weight:700;color:var(--muted)}
 .bk-x{margin-left:auto;border:0;background:rgba(255,255,255,.6);border-radius:999px;width:34px;height:34px;font-size:16px;cursor:pointer}
 .bk-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
