@@ -147,7 +147,7 @@ async function pdf(l){
     table{border-collapse:collapse;width:100%;font-size:13px} td,th{border:1px solid #ccc;padding:5px 8px;text-align:left} th{background:#f6eedb}
     .hint{position:fixed;top:8px;right:8px;background:#fff3d6;border:1px solid #f2a541;padding:8px 12px;border-radius:8px;font-size:13px} @media print{.hint{display:none}}
   </style></head><body><div class="hint">PDF olarak kaydetmek için yazdırma penceresinde <b>"PDF olarak kaydet"</b>i seç.</div>
-  <h1>🐇 ${esc(title)}</h1><div class="sub">Yıldırım LGS Koçu · ${date}${name ? ' · ' + esc(name) : ''} · ${l.length} soru · Net = Doğru − Yanlış ÷ 3</div>
+  <h1>🐇 ${esc(title)}</h1><div class="sub">Baniko Koçluk · ${date}${name ? ' · ' + esc(name) : ''} · ${l.length} soru · Net = Doğru − Yanlış ÷ 3</div>
   ${l.map((q, i) => `<div class="q"><b>${i + 1}.</b> <small>${SN[q.s]}${q.t ? ' · ' + esc(q.t) : ''}</small>${src[i] ? `<img src="${src[i]}">` : '<p><i>(fotoğraf bu cihazda bulunamadı)</i></p>'}<div class="opts">Ⓐ Ⓑ Ⓒ Ⓓ</div></div>`).join('')}
   <div class="key"><h1>🔑 Cevap Anahtarı</h1><div class="sub">${esc(title)} · ${date}</div>
   <table><tr><th>Soru</th><th>Cevap</th><th>Ders</th><th>Konu</th></tr>${l.map((q, i) => `<tr><td>${i + 1}</td><td><b>${q.a || '?'}</b></td><td>${SN[q.s]}</td><td>${esc(q.t || '')}</td></tr>`).join('')}</table></div>
